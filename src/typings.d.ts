@@ -22,38 +22,9 @@ type CreepRole =
   MINER |
   TRANSPORTER;
 
-/**
- * Type of role that a creep may have
- *
- */
 type HARVESTER = "HARVESTER";
-
-/**
- * Type of role that a creep may have
- *
- */
 type CONSTRUCTOR = "CONSTRUCTOR"
-
-/**
- * Type of role that a creep may have
- *
- */
 type UPGRADER = "UPGRADER";
-
-/**
- * Type of role that a creep may have
- *
- */
 type REPAIRER = "REPAIRER";
-
-/**
- * Type of role that a creep may have
- *
- */
 type MINER = "MINER";
-
-/**
- * Type of role that a creep may have
- *
- */
 type TRANSPORTER = "TRANSPORTER";

@@ -6,12 +6,6 @@ interface Memory {
 // `global` extension samples
 declare namespace NodeJS {
   interface Global {
-    TRANSPORTER: string;
-    MINER: string;
-    REPAIRER: string;
-    UPGRADER: string;
-    CONSTRUCTOR: string;
-    HARVESTER: string;
     log: any;
   }
 }
