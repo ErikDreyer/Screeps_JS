@@ -39,7 +39,7 @@ export const loop = ErrorMapper.wrapLoop(() => {
     const spawnName = Game.getObjectById(roomObject.memory.sourcesInRoom[0]);
 
     // spawn new creeps if necessary
-    if (numHarvesters < 2) {
+    if (numHarvesters < 1) {
       const creepName = "HARVESTER" + Game.time;
 
       // @ts-ignore
@@ -47,7 +47,7 @@ export const loop = ErrorMapper.wrapLoop(() => {
         console.log("Spawning: HARVESTER");
       }
     }
-    else if (numUpgraders < 3) {
+    else if (numUpgraders < 2) {
       const creepName = "UPGRADER" + Game.time;
 
       // @ts-ignore
