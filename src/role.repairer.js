@@ -1,11 +1,11 @@
 /**
- * Implements the role for the CONSTRUCTOR
+ * Implements the role for the REPAIRER
  * @author Erik Dreyer
  */
-var roleConstructor = {
+var roleRepairer = {
 
     /**
-     * Run the role implementation of the CONSTRUCTOR role
+     * Run the role implementation of the REPAIRER role
      *
      * @param {Creep} creep
      **/
@@ -19,13 +19,17 @@ var roleConstructor = {
                 creep.moveTo(sources[0]);
             }
         } else {
-            // if full, find a construction site
-            var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
+            // if full, find a structure with low health
+            var targets = creep.room.find(FIND_MY_STRUCTURES, {
+                filter: (structure) => {
+                    return (structure.hits < structure.hitsMax * 0.5);
+                }
+            });
 
-            // if a construction site is found
+            // if a structure is found
             if (targets.length > 0) {
 
-                // if not yet at the construction site, move to it
+                // if not yet at the structure, move to it
                 if (creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(targets[0]);
                 }
@@ -34,4 +38,4 @@ var roleConstructor = {
     }
 };
 
-module.exports = roleConstructor;
+module.exports = roleRepairer;

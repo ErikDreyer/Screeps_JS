@@ -1,11 +1,11 @@
 /**
- * Implements the role for the CONSTRUCTOR
+ * Implements the role for the upgrader
  * @author Erik Dreyer
  */
-var roleConstructor = {
+var roleUpgrader = {
 
     /**
-     * Run the role implementation of the CONSTRUCTOR role
+     * Run the role implementation of the UPGRADER role
      *
      * @param {Creep} creep
      **/
@@ -19,14 +19,18 @@ var roleConstructor = {
                 creep.moveTo(sources[0]);
             }
         } else {
-            // if full, find a construction site
-            var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
+            // if full, find the room controller
+            var targets = creep.room.find(FIND_STRUCTURES, {
+                filter: (structure) => {
+                    return (structure.structureType == STRUCTURE_CONTROLLER);
+                }
+            });
 
-            // if a construction site is found
+            // if a controller is found
             if (targets.length > 0) {
 
-                // if not yet at the construction site, move to it
-                if (creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
+                // if not yet at the controller, move to it
+                if (creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(targets[0]);
                 }
             }
@@ -34,4 +38,4 @@ var roleConstructor = {
     }
 };
 
-module.exports = roleConstructor;
+module.exports = roleUpgrader;
