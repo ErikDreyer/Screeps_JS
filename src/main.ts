@@ -2,6 +2,7 @@
  * Import other modules
  */
 import * as constant from "constant";
+import { MemoryManger } from "memoryManger";
 import { ErrorMapper } from "utils/ErrorMapper";
 
 /**
@@ -14,72 +15,65 @@ import "prototype.structurespawn";
 // When compiling TS to JS and bundling with rollup, the line numbers and file names in error messages change
 // This utility uses source maps to get the line numbers and file names of the original, TS source code
 export const loop = ErrorMapper.wrapLoop(() => {
+  // create a memory manager
+  const memoryManager = new MemoryManger();
+  memoryManager.deleteAllDeadCreepsFromMemory();
 
-  // Automatically delete memory of missing creeps
-  for (const name in Memory.creeps) {
-    if (!(name in Game.creeps)) {
-      delete Memory.creeps[name];
+
+  // loop through the rooms
+  for (const roomName in Game.rooms) {
+    const roomObject = Game.rooms[roomName];
+    memoryManager.initialiseRoomMemory(roomObject);
+    memoryManager.updateRoomMemory(roomObject);
+
+    // loop through the creeps in the room
+    // @ts-ignore
+    const numHarvesters = _.filter(roomObject.memory.ownedCreepsInRoom, c => Game.getObjectById(c).memory.role === constant.HARVESTER).length;
+    // @ts-ignore
+    const numUpgraders = _.filter(roomObject.memory.ownedCreepsInRoom, c => Game.getObjectById(c).memory.role === constant.UPGRADER).length;
+    // @ts-ignore
+    const numRepairers = _.filter(roomObject.memory.ownedCreepsInRoom, c => Game.getObjectById(c).memory.role === constant.REPAIRER).length;
+    // @ts-ignore
+    const numConstructors = _.filter(roomObject.memory.ownedCreepsInRoom, c => Game.getObjectById(c).memory.role === constant.CONSTRUCTOR).length;
+
+    const spawnName = Game.getObjectById(roomObject.memory.sourcesInRoom[0]);
+
+    // spawn new creeps if necessary
+    if (numHarvesters < 2) {
+      const creepName = "HARVESTER" + Game.time;
+
+      // @ts-ignore
+      if (Game.spawns[spawnName].spawnCreep([MOVE, WORK, CARRY], creepName, { memory: { role: constant.HARVESTER } }) === OK) {
+        console.log("Spawning: HARVESTER");
+      }
+    }
+    else if (numUpgraders < 3) {
+      const creepName = "UPGRADER" + Game.time;
+
+      // @ts-ignore
+      if (Game.spawns[spawnName].spawnCreep([MOVE, WORK, CARRY], creepName, { memory: { role: constant.UPGRADER } }) === OK) {
+        console.log("Spawning: UPGRADER");
+      }
+    }
+    else if (numConstructors < 2) {
+      const creepName = "CONSTRUCTOR" + Game.time;
+
+      // @ts-ignore
+      if (Game.spawns[spawnName].spawnCreep([MOVE, WORK, CARRY], creepName, { memory: { role: constant.CONSTRUCTOR } }) === OK) {
+        console.log("Spawning: CONSTRUCTOR");
+      }
+    }
+    else if (numRepairers < 1) {
+      const creepName = "REPAIRER" + Game.time;
+
+      // @ts-ignore
+      if (Game.spawns[spawnName].spawnCreep([MOVE, WORK, CARRY], creepName, { memory: { role: constant.REPAIRER } }) === OK) {
+        console.log("Spawning: REPAIRER");
+      }
     }
   }
-
-  // loop through all of the creeps and find the number of every role
-  let harvesters: number = 0;
-  let upgraders: number = 0;
-  let repairers: number = 0;
-  let constructors: number = 0;
 
   for (const creep in Game.creeps) {
-    if (Game.creeps[creep].memory.role === constant.HARVESTER) {
-      harvesters++;
-    }
-
-    if (Game.creeps[creep].memory.role === constant.UPGRADER) {
-      upgraders++;
-    }
-
-    if (Game.creeps[creep].memory.role === constant.REPAIRER) {
-      repairers++;
-    }
-
-    if (Game.creeps[creep].memory.role === constant.CONSTRUCTOR) {
-      constructors++;
-    }
-
     Game.creeps[creep].runRole();
-  }
-
-  const spawnName: string = 'Spawn1';
-  // spawn new creeps if necessary
-  if (harvesters < 2) {
-    const creepName = "HARVESTER" + Game.time;
-
-    // @ts-ignore
-    if (Game.spawns[spawnName].spawnCreep([MOVE, WORK, CARRY], creepName, { memory: { role: constant.HARVESTER } }) === OK) {
-      console.log("Spawning: HARVESTER");
-    }
-  }
-  else if (upgraders < 3) {
-    const creepName = "UPGRADER" + Game.time;
-
-    // @ts-ignore
-    if (Game.spawns[spawnName].spawnCreep([MOVE, WORK, CARRY], creepName, { memory: { role: constant.UPGRADER } }) === OK) {
-      console.log("Spawning: UPGRADER");
-    }
-  }
-  else if (repairers < 1) {
-    const creepName = "REPAIRER" + Game.time;
-
-    // @ts-ignore
-    if (Game.spawns[spawnName].spawnCreep([MOVE, WORK, CARRY], creepName, { memory: { role: constant.REPAIRER } }) === OK) {
-      console.log("Spawning: REPAIRER");
-    }
-  }
-  else if (constructors < 2) {
-    const creepName = "CONSTRUCTOR" + Game.time;
-
-    // @ts-ignore
-    if (Game.spawns[spawnName].spawnCreep([MOVE, WORK, CARRY], creepName, { memory: { role: constant.CONSTRUCTOR } }) === OK) {
-      console.log("Spawning: CONSTRUCTOR");
-    }
   }
 });

@@ -6,7 +6,7 @@ import { Upgrader } from "role.upgrader";
 import * as constants from "constants"
 
 /**
- * dictionary of all the creep role modules
+ * Dictionary of all the creep role modules
  */
 const roles: { [index: string]: any } = {
     CONSTRUCTOR: Constructor,
