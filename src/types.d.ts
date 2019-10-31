@@ -6,6 +6,12 @@ interface Memory {
 // `global` extension samples
 declare namespace NodeJS {
   interface Global {
+    TRANSPORTER: string;
+    MINER: string;
+    REPAIRER: string;
+    UPGRADER: string;
+    CONSTRUCTOR: string;
+    HARVESTER: string;
     log: any;
   }
 }
@@ -78,75 +84,3 @@ interface RoomMemory {
    */
   creepConfig: object[];
 }
-
-/**
- * Extend the interface of the Creep
- * @author Erik Dreyer
- *
- * @type interface
- */
-interface Creep {
-  /**
-   * Run the respective role of the Creep
-   *
-   * @type function
-   * @param role The role of the creep
-   */
-  runRole(role: CreepRole): void;
-}
-
-/**
- * Types of roles that a creep can have
- * @author Erik Dreyer
- */
-type CreepRole =
-  HARVESTER |
-  CONSTRUCTOR |
-  UPGRADER |
-  REPAIRER |
-  MINER |
-  TRANSPORTER;
-
-/**
- * Type of role that a creep may have
- *
- */
-declare const HARVESTER: "HARVESTER";
-type HARVESTER = "HARVESTER";
-
-/**
- * Type of role that a creep may have
- *
- */
-declare const CONSTRUCTOR = "CONSTRUCTOR";
-type CONSTRUCTOR = "CONSTRUCTOR";
-
-/**
- * Type of role that a creep may have
- *
- */
-declare const UPGRADER = "UPGRADER";
-type UPGRADER = "UPGRADER";
-
-/**
- * Type of role that a creep may have
- *
- */
-declare const REPAIRER = "REPAIRER";
-type REPAIRER = "REPAIRER";
-
-/**
- * Type of role that a creep may have
- *
- */
-declare const MINER = "MINER";
-type MINER = "MINER";
-
-/**
- * Type of role that a creep may have
- *
- */
-declare const TRANSPORTER = "TRANSPORTER";
-type TRANSPORTER = "TRANSPORTER";
-
-
