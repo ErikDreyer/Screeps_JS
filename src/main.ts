@@ -43,7 +43,7 @@ export const loop = ErrorMapper.wrapLoop(() => {
       const creepName = "HARVESTER" + Game.time;
 
       // @ts-ignore
-      if (spawn.spawnCreep([MOVE, WORK, CARRY], creepName, { memory: { role: constant.HARVESTER } }) === OK) {
+      if (spawn.spawnCreep([MOVE, WORK, CARRY], creepName, { memory: { role: constant.HARVESTER, collectResouces: false } }) === OK) {
         console.log("Spawning: HARVESTER");
       }
     }
@@ -51,7 +51,7 @@ export const loop = ErrorMapper.wrapLoop(() => {
       const creepName = "UPGRADER" + Game.time;
 
       // @ts-ignore
-      if (spawn.spawnCreep([MOVE, WORK, CARRY], creepName, { memory: { role: constant.UPGRADER } }) === OK) {
+      if (spawn.spawnCreep([MOVE, WORK, CARRY], creepName, { memory: { role: constant.UPGRADER, collectResouces: false } }) === OK) {
         console.log("Spawning: UPGRADER");
       }
     }
@@ -59,7 +59,7 @@ export const loop = ErrorMapper.wrapLoop(() => {
       const creepName = "CONSTRUCTOR" + Game.time;
 
       // @ts-ignore
-      if (spawn.spawnCreep([MOVE, WORK, CARRY], creepName, { memory: { role: constant.CONSTRUCTOR } }) === OK) {
+      if (spawn.spawnCreep([MOVE, WORK, CARRY], creepName, { memory: { role: constant.CONSTRUCTOR, collectResouces: false } }) === OK) {
         console.log("Spawning: CONSTRUCTOR");
       }
     }
@@ -67,7 +67,7 @@ export const loop = ErrorMapper.wrapLoop(() => {
       const creepName = "REPAIRER" + Game.time;
 
       // @ts-ignore
-      if (spawn.spawnCreep([MOVE, WORK, CARRY], creepName, { memory: { role: constant.REPAIRER } }) === OK) {
+      if (spawn.spawnCreep([MOVE, WORK, CARRY], creepName, { memory: { role: constant.REPAIRER, collectResouces: false } }) === OK) {
         console.log("Spawning: REPAIRER");
       }
     }

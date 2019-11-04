@@ -34,6 +34,12 @@ interface CreepMemory {
    * @type string
    */
   creationSpawn: string;
+
+  /**
+   * Flag that is used by certain roles to determine whether it should gather resources or do its task
+   * @type boolean
+   */
+  collectResources: boolean;
 }
 
 /**
