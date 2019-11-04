@@ -25,8 +25,9 @@ export class Upgrader {
             if (targets.length > 0) {
 
                 // if not yet at the controller, move to it
-                if (creep.transfer(targets[0], RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-                    creep.moveTo(targets[0]);
+                const controller: StructureController = targets[0] as StructureController;
+                if (creep.upgradeController(controller) === ERR_NOT_IN_RANGE) {
+                    creep.moveTo(controller);
                 }
             }
         }
